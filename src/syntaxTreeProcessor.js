@@ -46,4 +46,67 @@ export default class SyntaxTreeProcessor {
       });
     }
   }
+
+  #hanldeExpressionStatement(node) {
+    let { expression } = node;
+    if (!expression.left) return;
+
+    let varName = (expression.left.object || expression.left).name;
+    if (!this.#variables.has(varName)) return;
+
+    let variable = this.#variables.get(varName);
+    let { nodeDeclaration, originalKind, stage } = variable;
+
+    if (
+      expression.left.type === "MemberExpression" &&
+      stage === this.#stages.declaration
+    ) {
+      if (originalKind === this.#variableKinds.const) return;
+
+      this.#storeError(
+        this.#messages.useConst(originalKind),
+        nodeDeclaration.loc.start,
+      );
+
+      nodeDeclaration.kind = this.#variableKinds.const;
+
+      this.#variables.set(varName, {
+        ...variable,
+        stage: this.#stages.expressionDeclaration,
+        nodeDeclaration,
+      });
+
+      return;
+    }
+
+    if (
+      [nodeDeclaration.kind, originalKind].includes(this.#variableKinds.let)
+    ) {
+      this.#variables.set(varName, {
+        ...variable,
+        stage: this.#stages.expressionDeclaration,
+        nodeDeclaration,
+      });
+
+      return;
+    }
+
+    this.#storeError(
+      this.#messages.useLet(originalKind),
+      nodeDeclaration.loc.start,
+    );
+
+    nodeDeclaration.kind = this.#variableKinds.let;
+
+    this.#variables.set(varName, {
+      ...variable,
+      stage: this.#stages.expressionDeclaration,
+      nodeDeclaration,
+    });
+
+    return;
+  }
+
+
+
 }
