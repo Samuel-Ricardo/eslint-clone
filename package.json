@@ -1,0 +1,19 @@
+{
+  "name": "eslint-clone",
+  "version": "1.0.0",
+  "description": "ESLINT Clone With JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Samuel-Ricardo/eslint-clone.git"
+  },
+  "author": "Samuel Ricardo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Samuel-Ricardo/eslint-clone/issues"
+  },
+  "homepage": "https://github.com/Samuel-Ricardo/eslint-clone#readme"
+}
