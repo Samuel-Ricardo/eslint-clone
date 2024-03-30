@@ -121,4 +121,20 @@ export default class SyntaxTreeProcessor {
       this.#traverse(nodeDeclaration[key]);
     }
   }
+
+  #checkDeclarationsThatNeverChanged() {
+    [...this.#variables.values()]
+      .filter(
+        ({ stage, nodeDeclaration }) =>
+          stage === this.#stages.declaration &&
+          nodeDeclaration.kind !== this.#variableKinds.const,
+      )
+      .forEach(({ nodeDeclaration }) => {
+        this.#storeError(
+          this.#messages.useConst(nodeDeclaration.kind),
+          nodeDeclaration.loc.start,
+        );
+        nodeDeclaration.kind = this.#variableKinds.const;
+      });
+  }
 }
