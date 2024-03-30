@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Samuel-Ricardo/eslint-clone/issues"
   },
-  "homepage": "https://github.com/Samuel-Ricardo/eslint-clone#readme"
+  "homepage": "https://github.com/Samuel-Ricardo/eslint-clone#readme",
+  "dependencies": {
+    "astring": "^1.8.6"
+  }
 }
