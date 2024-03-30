@@ -20,4 +20,9 @@ export default class SyntaxTreeProcessor {
   constructor(filePath) {
     this.#filePath = filePath;
   }
+
+  #storeError(message, { line, column }) {
+    let errorLocation = `${this.#filePath}:${line}:${column + 1}`;
+    this.#errors.set(errorLocation, { message, errorLocation });
+  }
 }
