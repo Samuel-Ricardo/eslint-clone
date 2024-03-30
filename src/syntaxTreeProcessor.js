@@ -34,4 +34,16 @@ export default class SyntaxTreeProcessor {
 
     this.#storeError(this.#messages.singleQuote(), nodeDeclaration.loc.start);
   }
+
+  #handleVariableDeclaration(nodeDeclaration) {
+    let originalKind = nodeDeclaration.kind;
+
+    for (let declaration of nodeDeclaration.declarations) {
+      this.#variables.set(declaration.id.name, {
+        originalKind,
+        stage: this.#stages.declaration,
+        nodeDeclaration,
+      });
+    }
+  }
 }
