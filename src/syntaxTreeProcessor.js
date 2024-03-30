@@ -25,4 +25,13 @@ export default class SyntaxTreeProcessor {
     let errorLocation = `${this.#filePath}:${line}:${column + 1}`;
     this.#errors.set(errorLocation, { message, errorLocation });
   }
+
+  #handleLiteral(nodeDeclaration) {
+    if (!(nodeDeclaration.raw && typeof nodeDeclaration.value === "string"))
+      return;
+
+    if (!nodeDeclaration.raw.includes(`"`)) return;
+
+    this.#storeError(this.#messages.singleQuote(), nodeDeclaration.loc.start);
+  }
 }
