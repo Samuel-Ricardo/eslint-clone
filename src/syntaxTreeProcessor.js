@@ -137,4 +137,11 @@ export default class SyntaxTreeProcessor {
         nodeDeclaration.kind = this.#variableKinds.const;
       });
   }
+
+  process(ast) {
+    this.#traverse(ast);
+    this.#checkDeclarationsThatNeverChanged();
+
+    return [...this.#errors.values()];
+  }
 }
