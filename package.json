@@ -9,6 +9,7 @@
   },
   "scripts": {
     "lint": "eslint-clone --file target/error.js",
+    "start": "node src/index.js --file target/error.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

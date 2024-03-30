@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import * as astring from "astring";
-import fs from "ndoe:fs";
+import fs from "node:fs";
+import path from "node:path";
 
 export default class Reporter {
   static report({ errors, ast, outputFilePath }) {
