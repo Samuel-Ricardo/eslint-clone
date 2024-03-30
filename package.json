@@ -8,6 +8,7 @@
     "eslint-clone": "src/index.js"
   },
   "scripts": {
+    "lint": "eslint-clone --file error.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
