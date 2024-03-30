@@ -47,7 +47,7 @@ export default class SyntaxTreeProcessor {
     }
   }
 
-  #hanldeExpressionStatement(node) {
+  #handleExpressionStatement(node) {
     let { expression } = node;
     if (!expression.left) return;
 
@@ -107,6 +107,18 @@ export default class SyntaxTreeProcessor {
     return;
   }
 
+  #traverse(nodeDeclaration) {
+    let hooks = {
+      Literal: (node) => this.#handleLiteral(node),
+      variableDeclaration: (node) => this.#handleVariableDeclaration(node),
+      ExpressionStatement: (node) => this.#handleExpressionStatement(node),
+    };
 
+    hooks[nodeDeclaration?.type]?.(nodeDeclaration);
 
+    for (let key in nodeDeclaration) {
+      if (typeof nodeDeclaration[key] !== "object") continue;
+      this.#traverse(nodeDeclaration[key]);
+    }
+  }
 }
